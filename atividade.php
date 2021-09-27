@@ -1,7 +1,6 @@
 <?php
 
 require_once 'config.php';
-
 try {
 	$dsn = "pgsql:host=$host;port=5432;dbname=$db;";
 	// make a database connection
@@ -9,7 +8,7 @@ try {
   $pessoas = $pdo->query('SELECT * FROM pessoas');
 
 	if ($pdo) {
-		echo "Connected to the $db database successfully!";
+	//	echo "Connected to the $db database successfully!";
 	}
 } catch (PDOException $e) {
 	die($e);
@@ -35,13 +34,14 @@ try {
             <th scope="col">Idade</th>
             <th scope="col">CPF</th>
             <th scope="col">Tipo</th>
+            <th scope="col">Editar</th>
           </tr>
         </thead>
         <tbody>
           <?php
             foreach($pessoas as $pessoa){
               echo "<tr>";
-              echo "<td class='table-secondary'>$pessoa[nome]</td>";
+              echo "<td class='table-secondary' name='botaoat'>".strtoupper($pessoa[nome])."</td>";
               echo "<td class='table-secondary'>$pessoa[idade]</td>";
               echo "<td class='table-secondary'>$pessoa[cpf]</td>";
               $idad = $pessoa['idade'];
@@ -60,17 +60,14 @@ try {
                 echo "Adulto";
                 echo "</td>";
               }
+              echo "<td class='table-secondary'><form action='update.php'><input type='submit' name='botaoatt' value='Atualizar'></form><form><input type='button' name='botaodel' value='Excluir'></td></form>";
               echo "</tr>";
             }
           ?>
           <?php
-            $idnome   = $_GET['idnome'];
-            $ididade  = $_GET['ididade'];
-            $idcpf    = $_GET['cpf'];
-            echo "<td class='table-secondary'>$idnome</td>";
-            echo "<td class='table-secondary'>$ididade</td>";
-            echo "<td class='table-secondary'>$idcpf</td>";
-            if($ididade <= 12){
+            if($idad){
+            }
+            elseif($ididade <= 12){
               echo "<td class='table-primary'>";
               echo "Criança";
               echo "</td>";
@@ -88,12 +85,20 @@ try {
           ?>
         </tbody>
       </table>
-      <form action="create.php">
-        <input type="text" name="idnome" placeholder="Nome">
-        <input type="number" name="ididade" placeholder="Idade">
-        <input type="number" name="cpf" placeholder="CPF">
-        <input type="submit" name="botao" value="Adicionar">
-      </form>
+      <div>
+        <form action="create.php">
+          <input type="text" name="idnome" placeholder="Nome">
+          <input type="number" name="ididade" placeholder="Idade">
+          <input type="number" name="idcpf" placeholder="CPF">
+          <input type="submit" name="botao" value="Adicionar">
+        </form>
+      </div>
+      <div>
+        <form action="update.php">
+        <input type="text" name="idnomeup" placeholder="Nome da pessoa">
+        <input type="submit" name="botaoup" value="Atualizar">
+        </form>
+      </div>
     </div>
   </body>
 </html>
