@@ -1,6 +1,5 @@
 <?php
 require_once 'config.php';
-
 try {
 	$dsn = "pgsql:host=$host;port=5432;dbname=$db;";
 	// make a database connection
