@@ -1,6 +1,6 @@
 <?php
-
 require_once 'config.php';
+
 try {
 	$dsn = "pgsql:host=$host;port=5432;dbname=$db;";
 	// make a database connection
@@ -60,7 +60,7 @@ try {
                 echo "Adulto";
                 echo "</td>";
               }
-              echo "<td class='table-secondary'><form action='update.php'><input type='submit' name='botaoatt' value='Atualizar'></form><form><input type='button' name='botaodel' value='Excluir'></td></form>";
+              echo "<td class='table-secondary'> <a href='update.php?id=$pessoa[id]' class='btn btn-dark'>Editar</a><a href='delete.php?id=$pessoa[id]' class='btn btn-danger'>Excluir</td>";
               echo "</tr>";
             }
           ?>
@@ -91,12 +91,6 @@ try {
           <input type="number" name="ididade" placeholder="Idade">
           <input type="number" name="idcpf" placeholder="CPF">
           <input type="submit" name="botao" value="Adicionar">
-        </form>
-      </div>
-      <div>
-        <form action="update.php">
-        <input type="text" name="idnomeup" placeholder="Nome da pessoa">
-        <input type="submit" name="botaoup" value="Atualizar">
         </form>
       </div>
     </div>
