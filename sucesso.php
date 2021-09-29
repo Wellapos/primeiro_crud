@@ -7,21 +7,25 @@
 <?php
 
 require_once 'config.php';
-$nome = $_GET['idnomeup'];
+$nome = $_GET['nome'];
 $pessoaid = $_GET['idp'];
+$idade = $_GET['idade'];
+$cpf = $_GET['cpf'];
 
 try {
     $dsn = "pgsql:host=$host;port=5432;dbname=$db;";
       // make a database connection
       $pdo = new PDO($dsn, $user, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     if($pdo){
-      $stmt = $pdo->prepare('UPDATE pessoas SET nome = :nome WHERE id = :id');
+      $stmt = $pdo->prepare('UPDATE pessoas SET nome = :nome, idade = :idade, cpf = :cpf WHERE id = :id');
       $stmt->execute(array(
         ':id'   => $pessoaid,
-        ':nome' => $nome
+        ':nome' => $nome,
+        ':idade' => $idade,
+        ':cpf' => $cpf
       ));
     }
-    echo "<p style='color: green;'>$nome Atualizado com sucesso!</p>";
+    echo "<p style='color: green;'>Cadastro atualizado com sucesso!</p>";
     header("Refresh:2; url=atividade.php");
   } catch(PDOException $e) {
     echo 'Error: ' . $e->getMessage();

@@ -22,10 +22,30 @@ try {
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
   <body>
+      <template id="my-template">
+      <swal-title>
+        Save changes to "Untitled 1" before closing?
+      </swal-title>
+      <swal-icon type="warning" color="red"></swal-icon>
+      <swal-button type="confirm">
+        Save As
+      </swal-button>
+      <swal-button type="cancel">
+        Cancel
+      </swal-button>
+      <swal-button type="deny">
+        Close without Saving
+      </swal-button>
+      <swal-param name="allowEscapeKey" value="false" />
+      <swal-param
+        name="customClass"
+        value='{ "popup": "my-popup" }' />
+    </template>
     <div class="container">
-      <h1>Estamos aprendendo PHP!</h1>
+      <h1>Cadastro de pessoas!</h1>
       <table class="table">
         <thead>
           <tr class="table-dark">
@@ -59,7 +79,7 @@ try {
                 echo "Adulto";
                 echo "</td>";
               }
-              echo "<td class='table-secondary'> <a href='update.php?id=$pessoa[id]' class='btn btn-dark'>Editar</a><a href='delete.php?id=$pessoa[id]' class='btn btn-danger'>Excluir</td>";
+              echo "<td class='table-secondary'> <a href='update.php?id=$pessoa[id]' class='btn btn-success'>Editar</a><a href='delete.php?id=$pessoa[id]' class='btn btn-danger'>Excluir</td>";
               echo "</tr>";
             }
           ?>
@@ -86,10 +106,16 @@ try {
       </table>
       <div>
         <form action="create.php">
-          <input type="text" name="idnome" placeholder="Nome">
-          <input type="number" name="ididade" placeholder="Idade">
-          <input type="number" name="idcpf" placeholder="CPF">
-          <input type="submit" name="botao" value="Adicionar">
+          <h3>Adicionar pessoas</h3>
+          <div class="container">
+            <label class="form-label">Nome:</label>
+            <input type="text" name="idnome" placeholder="Nome da pessoa" class="form-control">
+            <label class="form-label">Idade:</label>
+            <input type="number" name="ididade" placeholder="Idade" class="form-control">
+            <label class="form-label">CPF:</label>
+            <input type="number" name="idcpf" placeholder="CPF" class="form-control">
+            <input type="submit" name="botao" value="Adicionar" class="btn btn-outline-secondary">
+          </div>
         </form>
       </div>
     </div>
