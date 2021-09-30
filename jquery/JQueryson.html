@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>Trabalhando com JSON</title>
+   <script type="text/javascript"
+   src="jquery-3.6.0.js"></script>
+   <script type="text/javascript" language="javascript">
+   $(document).ready(function(){
+      $("#driver").click(function(event){
+          $.getJSON('https://parallelum.com.br/fipe/api/v1/motos/marcas', function(v) {
+            $('#stage').html('<p> Filme 1: ' + v.nome + '</p>');            
+            $('#stage').append('<p>Filme 2 : ' + v.nome+ '</p>');
+            $('#stage').append('<p> Filme 3: ' + v.nome+ '</p>');
+          });
+      });
+   });
+   </script>
+</head>
+<body>
+   <p>Clique no botão para carregar os dados</p>
+   <div id="stage" style="background-color:red;">
+          Filmes:
+   </div>
+   <input type="button" id="driver" value="Carregar" />
+</body>
+</html>

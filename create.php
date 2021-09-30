@@ -16,11 +16,13 @@ try {
     $cpf = $_GET['idcpf'];
 
     $stmt = $pdo->prepare('INSERT INTO pessoas (nome, idade, cpf) VALUES(:nome, :idade, :cpf)');
-    $stmt->execute(array(
-        ':nome' => $nome,
-        ':idade' => $idade,
-        ':cpf' => $cpf
-    ));
+    if(!empty($nome) && !empty($idade) && !empty($cpf)){
+      $stmt->execute(array(
+          ':nome' => $nome,
+          ':idade' => $idade,
+          ':cpf' => $cpf
+      ));
+    }
     echo "<p style='color: green;'>$nome cadastrado(a) com sucesso!</p>";
     header("Refresh:2; url=atividade.php");
 	}

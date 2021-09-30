@@ -4,7 +4,7 @@ try {
 	$dsn = "pgsql:host=$host;port=5432;dbname=$db;";
 	// make a database connection
 	$pdo = new PDO($dsn, $user, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-  $pessoas = $pdo->query('SELECT * FROM pessoas');
+  $pessoas = $pdo->query('SELECT * FROM pessoas ORDER BY nome');
 
 	if ($pdo) {
 	//	echo "Connected to the $db database successfully!";
@@ -20,31 +20,17 @@ try {
 <!DOCTYPE html>
 <html>
 <head>
+  <script type="text/javascript" src="jquery/jquery-3.6.0.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
   <body>
-      <template id="my-template">
-      <swal-title>
-        Save changes to "Untitled 1" before closing?
-      </swal-title>
-      <swal-icon type="warning" color="red"></swal-icon>
-      <swal-button type="confirm">
-        Save As
-      </swal-button>
-      <swal-button type="cancel">
-        Cancel
-      </swal-button>
-      <swal-button type="deny">
-        Close without Saving
-      </swal-button>
-      <swal-param name="allowEscapeKey" value="false" />
-      <swal-param
-        name="customClass"
-        value='{ "popup": "my-popup" }' />
-    </template>
     <div class="container">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+      </svg>
       <h1>Cadastro de pessoas!</h1>
       <table class="table">
         <thead>
@@ -59,7 +45,7 @@ try {
         <tbody>
           <?php
             foreach($pessoas as $pessoa){
-              echo "<tr>";
+              echo "<tr id='linha-$pessoa[id]'>";
               echo "<td class='table-secondary' name='botaoat'>".strtoupper($pessoa[nome])."</td>";
               echo "<td class='table-secondary'>$pessoa[idade]</td>";
               echo "<td class='table-secondary'>$pessoa[cpf]</td>";
@@ -79,7 +65,13 @@ try {
                 echo "Adulto";
                 echo "</td>";
               }
-              echo "<td class='table-secondary'> <a href='update.php?id=$pessoa[id]' class='btn btn-success'>Editar</a><a href='delete.php?id=$pessoa[id]' class='btn btn-danger'>Excluir</td>";
+              echo "<td class='table-secondary'> <a href='update.php?id=$pessoa[id]' class='btn btn-success'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'>
+              <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>
+              <path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'/>
+              </svg></a>";
+              echo "<a href='delete.php?id=$pessoa[id]' class='btn btn-danger' onclick='confirmation(event, $pessoa[id])'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>
+              <path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>
+              </svg></a></td>";
               echo "</tr>";
             }
           ?>
@@ -119,5 +111,39 @@ try {
         </form>
       </div>
     </div>
+    <script>
+      function confirmation(ev, id) {
+        ev.preventDefault();
+
+        Swal.fire({
+          title: 'Realmente deseja excluir?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sim, excluir!'
+        }).then((result) => {
+          if (result.isConfirmed == true){
+            $.ajax({
+                url: 'delete.php',
+                type: 'GET',
+                data: 'id=' + id,
+              })
+              .done(function(response) {
+                resposta = JSON.parse(response);
+                  if (resposta["code"] == 200){
+                    Swal.fire('Sucesso', resposta["message"], 'success')
+                    $('#linha-'+id).fadeOut();
+                  }else{
+                    Swal.fire('Oops...', resposta["message"], 'error')
+                  }
+              })
+              .fail(function() {
+                  Swal.fire('Oops...', 'Algo deu errado!', 'error')
+              });
+            }
+        });
+      }
+    </script>
   </body>
 </html>

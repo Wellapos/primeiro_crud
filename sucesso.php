@@ -18,12 +18,15 @@ try {
       $pdo = new PDO($dsn, $user, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     if($pdo){
       $stmt = $pdo->prepare('UPDATE pessoas SET nome = :nome, idade = :idade, cpf = :cpf WHERE id = :id');
-      $stmt->execute(array(
-        ':id'   => $pessoaid,
-        ':nome' => $nome,
-        ':idade' => $idade,
-        ':cpf' => $cpf
-      ));
+      
+      if(!empty($pessoaid) && !empty($nome) && !empty($idade) && !empty($cpf)){
+        $stmt->execute(array(
+          ':id'   => $pessoaid,
+          ':nome' => $nome,
+          ':idade' => $idade,
+          ':cpf' => $cpf
+        ));
+      }
     }
     echo "<p style='color: green;'>Cadastro atualizado com sucesso!</p>";
     header("Refresh:2; url=atividade.php");
