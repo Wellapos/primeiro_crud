@@ -37,16 +37,16 @@ if($stmt = $pdo->prepare($sql)){
 }
 
 
-echo "<form action='sucesso.php' class='container'>";
-echo "<label class='form-label'>Nome:</label>";
-echo "<input type='text' name='nome' placeholder='Nome da pessoa' value='$nome' class='form-control'>";
-echo "<label class='form-label'>Idade:</label>";
-echo "<input type='number' name='idade' placeholder='Idade da pessoa' value='$idade' class='form-control'>";
-echo "<label class='form-label'>CPF:</label>";
-echo "<input type='text' name='cpf' placeholder='CPF da pessoa' value='$cpf' class='form-control'>";
-echo "<input type='hidden' name='idp' value='$pessoaid'>";
-echo "<input type='submit' name='botaoup' value='Atualizar' class='btn btn-success'>";
-echo "<a href='atividade.php' class='btn btn-danger'>Voltar</a>";
-echo "</form>";
+echo"<form action='sucesso.php' class='container'>
+    <label class='form-label'>Nome:</label>
+    <input type='text' name='nome' placeholder='Nome da pessoa' value='$nome' class='form-control'>
+    <label class='form-label'>Idade:</label>
+    <input type='number' name='idade' placeholder='Idade da pessoa' value='$idade' class='form-control'>
+    <label class='form-label'>CPF:</label>
+    <input type='text' name='cpf' placeholder='CPF da pessoa' value='$cpf' class='form-control'>
+    <input type='hidden' name='idp' value='$pessoaid'>
+    <input type='submit' name='botaoup' value='Atualizar' class='btn btn-success'>
+    <a href='atividade.php' class='btn btn-danger'>Voltar</a>
+    </form>";
 ?>
 </html>
